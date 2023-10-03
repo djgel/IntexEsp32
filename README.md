@@ -12,7 +12,8 @@ Codes has partial copy / inspiration of [Yogui79/IntexPureSpa] (https://github.c
 
 ## Hardware to you need
 
--   **ESP32 Dev Kit 38Pin**  (Microcontroller) -  [amazon.de](https://amzn.to/3uoa2y4) or [amazon.fr](https://amzn.to/2RvXbLn)
+-   **ESP32 Dev Kit 38Pin**  (Microcontroller) -  [amazon.de](https://amzn.to/3uoa2y4) or [amazon.fr](https://amzn.to/2RvXbLn)]
+-   [**Esp32PureSpa**] (Hardware/) Board to make! (in Developed)
 
 
 ## Software to you need
