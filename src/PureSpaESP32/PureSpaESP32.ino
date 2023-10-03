@@ -17,14 +17,9 @@
 
 */
 
-/*******************************************************
-*
-*   S E L E C T    Y O U R   S P A   M O D E L 
-*  
-*******************************************************
-Now Olny  work to Jet&bubbles Delux
+//Now Only  work to Jet&bubbles Delux
 
-*/
+
 
 
 /*******************************************************
@@ -72,27 +67,47 @@ EspMQTTClient client(
 bool FirstSend;
 
 #include <arduino-timer.h>
-#include "EEPROM.h"
-#define EEPROM_SIZE       64
-#if defined (__AVR__) 
-#include <SoftwareSerial.h>
-SoftwareSerial mySerial(2, 4); // RX, TX
-// Output defines
-#define DO_SET    6
-#define DO_CS     5
-#elif defined (ESP32)
+
 #define mySerial   Serial2
 #define DO_SET    19
 #define DO_CS     18
+
+
+
+// PINs
+#define PUMP_PIN       16
+#define BUBBLES_PIN    17
+#define JET_PIN        5
+#define HEATER01_PIN   18
+#define HEATER02_PIN   19
+#define CL01_PIN       27
+#define CL02_PIN       14
+#define ECO_PIN        4
+#define TEMP01_PIN     35
+#define TEMP02_PIN     34
+#define FLOW01_PIN     22
+#define FLOW02_PIN     23
+#define TFUSE_PIN      32
+#define SDA_PIN        25
+#define SCL_PIN        26
+
+
 #include <WiFi.h>
 #include <ESPmDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-#endif
+#include <Wire.h>
+#include <Adafruit_INA219.h>
+
+
+//Amp Modulo INA219
+
+Adafruit_INA219 ina219_0 (0x40);
+Adafruit_INA219 ina219_1 (0x41);
 
 //Version and date
-#define _VERSION         "1.1.1"
-#define _BUILD_DATE_TIME "2021.07.31 21:27:53"
+#define _VERSION         "1.0"
+#define _BUILD_DATE_TIME "2023.10.03 "
 
 
 //Command
@@ -198,13 +213,12 @@ uint8_t ActualSetpointRecirculationTime;
 uint8_t TargetSetpointRecirculationTime;
 bool SwitchOffRecirculation;
 bool StateRecirculation;
-#ifdef _28458_28462_
 bool ChangeSetpointSanitizerTime;
 uint8_t ActualSetpointSanitizerTime;
 uint8_t TargetSetpointSanitizerTime;
 bool SwitchOffSanitizer;
 bool StateSanitizer;
-#endif
+
 
 //Setup
 void setup() {
@@ -221,7 +235,7 @@ void setup() {
   Serial.println(F(""));
   Serial.println(F("----------------------------------------------------------------------------------------------------------------------"));  
   
-#ifdef ESP32
+
   Serial.println("Booting");
   WiFi.mode(WIFI_STA);
   WiFi.begin(Myssid, Mypassword);
@@ -263,7 +277,7 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   
-#endif
+
   
 #if  defined (_MQTT_) &&  defined (DEBUG_MQTT)
   client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
@@ -276,66 +290,20 @@ void setup() {
   delay(100);
 
   //read channel inside EERPOM 
-#ifdef ESP32  
-  if (!EEPROM.begin(EEPROM_SIZE))
-  {
-    Serial.println("failed to initialise EEPROM"); delay(1000000);
-  }
-#endif  
-  uint8_t DefaultChannel = (USED_CHANNEL & 0x00FF);
-#if defined (_28458_28462_)  
-   uint8_t DefaultFirstCommandChar = USED_CHANNEL ;
-#elif defined (_28442_28440_)  
-  uint8_t DefaultFirstCommandChar = (USED_CHANNEL & 0x00FF) + 0x7F;
-#endif  
-  UsedChannel = EEPROM.read(17)< 128? EEPROM.read(17):DefaultChannel ;
-  FirstCommandChar = EEPROM.read(18)< 256? EEPROM.read(18):DefaultFirstCommandChar;
-
-  Serial.print (F("Used Channel read from EEPROM 0x"));
-  Serial.println(UsedChannel,HEX);
-  Serial.print (F("Used first command read from EEPROM 0x"));
-  Serial.println(FirstCommandChar,HEX);
-  // Configure LC12s if a channel is known
-  if (UsedChannel){
-    SetSettings(UsedChannel);
-  }
-  else{ //else search the used channel
-     Serial.println (F("No channel saved in the EEPROM"));
-     while (!SearchChannel());     
-  }
-//configure send alive timer  
-#ifdef  __AVR__    
-  t.every(800, SendLifeFct, (void*)0); // only the alf time due to softwareserial
-#endif
-#ifdef  ESP32    
   t.every(1600, SendLifeFct);
-#endif  
   LastTimeReciveData = LastTimeSendData= millis();
 }// void setup()
 
 void loop() {
    //update timer
    t.tick();
-#ifdef  __AVR__  
-   mySerial.listen();
-#endif
-#ifdef ESP32
+
+
   ArduinoOTA.handle();
-#endif
+
    
    if (!FinishPumpMessage)
    {
-#ifdef __AVR__
-    //in case of overflow
-    if ( mySerial.overflow() ) 
-    {
-      state = 0;
-      DataCounter=0;
-      while ( mySerial.available())
-        mySerial.read();
-    }
-    else
-#endif    
     {
        if (mySerial.available() ) 
        {
@@ -357,9 +325,7 @@ void loop() {
        SendCommandManagement (&CommandToSend);
        SendTemperatureSetpoint();
        SendSpecialCommand(COMMAND_WATER_FILTER, &ChangeSetpointRecirculationTime, SwitchOffRecirculation,TargetSetpointRecirculationTime, ActualSetpointRecirculationTime);
-    #ifdef _28458_28462_
        SendSpecialCommand(COMMAND_SANITIZER, &ChangeSetpointSanitizerTime, SwitchOffSanitizer,TargetSetpointSanitizerTime, ActualSetpointSanitizerTime);
-    #endif
        state =0;
        FirstSend = true;
        FinishPumpMessage = false;  
@@ -383,36 +349,21 @@ void loop() {
       ControllerLoadingState = DataController[BYTE_CONTROLLER_LOADING];
       FinishControllerMessage = false;
    }
-#ifdef _MY_SENSORS_   
-   MySensorsCommandManagement();
-#endif   
-#ifdef _MQTT_
+
   client.loop();
   if (   !client.isConnected()
       && !FirstSend 
      ){
       LastTimeReciveData = millis();
      }
-#endif
+
   // check communication pump timeout
 
     {  
       if (millis() - LastTimeReciveData > 5000)
         {
         SendValue("IntexSpa/Communication with pump", false,ID_COM_PUMP); 
-        ErrorCommunicationWithPump = true;
-#ifdef _28442_28440_
-        if ( FirstCommandChar - UsedChannel> 0x80 ){
-          Serial.println (F("Rebase channel to first command char"));
-          UsedChannel = FirstCommandChar-0x80;
-          SetSettings(UsedChannel);
-          EEPROM.write(17, UsedChannel);
-  #ifdef ESP32
-          EEPROM.commit();
-  #endif        
-        }
-#endif
-        
+        ErrorCommunicationWithPump = true;     
       }
       else{
         SendValue("IntexSpa/Communication with pump", true,ID_COM_PUMP); 
@@ -422,49 +373,26 @@ void loop() {
   //Try to find the new channel in case of pump change channel
   if (   !FirstSend 
       &&  (millis() - LastTimeReciveData > 6000 )
-#ifdef _MQTT_ 
+
       &&  client.isConnected()      
-#endif
+
      ){
-#if defined (_28458_28462_)
      if (ChannelChangeOk == 1){ 
         ActualSearchChannel =UsedChannel+1;
      }
-#elif defined  (_28442_28440_)
-     if (ChannelChangeOk == 1){
-      FirstCommandChar = FirstCommandChar -6;      
-     }
-     if (ChannelChangeOk >0 && ChannelChangeOk < 15){ 
-        LastTimeReciveData = millis();
-        ChannelChangeOk++;
-        FirstCommandChar ++;
-        EEPROM.write(18, FirstCommandChar);
-#ifdef ESP32        
-        EEPROM.commit();
-#endif        
-        Serial.print (F("Try next first Command char 0x"));
-        Serial.println (FirstCommandChar,HEX);
-        return;
-     }
-     else if (ChannelChangeOk > 14)
-        ActualSearchChannel =UsedChannel+1;
-#endif
+
      else{
         ActualSearchChannel =UsedChannel -10;
      }
      UsedChannel=0;
      ChannelChangeOk = 0;
      Serial.println (F("Look like channel change since last boot"));
-#ifdef _MQTT_
      client.publish("IntexSpa/Notification", "Search the device"); 
-#endif     
      while (!UsedChannel &&  (millis() - LastTimeReciveData < 420000 ))
        SearchChannel();
-#ifdef _MQTT_
      if (UsedChannel)
       client.publish("IntexSpa/Notification", "Device found"); 
-#endif      
-  }
+    }
 
 } //void loop() 
 
@@ -704,7 +632,6 @@ void DataManagement (){
        SendValue("IntexSpa/Cmd water filter time", Data[BYTE_SETPOINT_TIME_FILTER],ID_TARGET_FILTER_TIME);   
    }
 
-#ifdef _28458_28462_
    //Send water jet on 
    SendValue("IntexSpa/Water jet on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_WATER_JET_ON),ID_VALUE_WATER_JET_ON); 
 
@@ -720,7 +647,7 @@ void DataManagement (){
        TargetSetpointSanitizerTime =ActualSetpointSanitizerTime;
        SendValue("IntexSpa/Cmd Sanitizer time", Data[BYTE_SETPOINT_TIME_SANITIZER],ID_TARGET_SANITIZER_TIME);   
    }  
-#endif   
+  
    
    //Send Farenheit selected
    FarenheitCelsius = (bool)(Data[BYTE_STATUS_STATUS] & VALUE_FARENHEIT);
@@ -897,172 +824,6 @@ void SendCommand(uint16_t Command){
 #endif    
 }
 
-//search channel
-bool SearchChannel(){
-#ifdef DEBUG_SEARCH_CHANNEL 
-  char res[5];
-#endif  
-
-#ifdef __AVR__
-  //in case of overflow
-  if ( mySerial.overflow() ) 
-  {
-    state = 0;
-    DataCounter=0;
-    while ( mySerial.available())
-      mySerial.read();
-  }
-  else
-#endif    
-  {
-     if (millis() - LastTimeReciveDataCheckChannel >1000) 
-     {
-        SearchChannelDataCount =0;
-        if (ActualSearchChannel<128){
-          SetSettings(ActualSearchChannel++);
-        }else{
-          ActualSearchChannel=0;
-          SetSettings(ActualSearchChannel++);
-        }        
-     }       
-     if (mySerial.available() ) 
-     {
-      unsigned char c = mySerial.read();
-      LastTimeReciveDataCheckChannel = millis();
-      SearchChannelDataCount++;
-#ifdef DEBUG_SEARCH_CHANNEL
-      sprintf(&res[0],"%02X",c); 
-      if (c==0xAA){
-        Serial.println(F(""));
-        Serial.print(F("Debug search Chanel : "));
-      }
-      Serial.print(res);
-      Serial.print(F(" "));
-#endif
-      if (SearchChannelDataCount >1500){
-        ChannelChangeOk ++;
-        UsedChannel = ActualSearchChannel-1; // due to autoamtic add inside the search function
-        LastTimeReciveData = LastTimeSendData= millis();
-#if defined (_28458_28462_)
-        FirstCommandChar = UsedChannel;
-#elif defined  (_28442_28440_)
-        FirstCommandChar = UsedChannel + 0x7F;
-#endif        
-        // Write chanel to eeprom
-        if (UsedChannel){
-          EEPROM.write(17, UsedChannel);
-          EEPROM.write(18, FirstCommandChar);
-          EEPROM.commit();
-        }
-#ifdef DEBUG_SEARCH_CHANNEL
-        sprintf(&res[0],"%02X",UsedChannel);
-        Serial.println(F(""));
-        Serial.print(F("Found channel 0x"));
-        Serial.println(res);
-        sprintf(&res[0],"%02X",FirstCommandChar);
-        Serial.print(F("First Command Char 0x"));
-        Serial.println(res);
-#endif         
-        return true;             
-      }
-     }
-   }
-   return false;
-}
-
-// Set settings to LC12s
-void SetSettings(char Channel){
-  byte Config[20];
-  uint16_t UsedNetworkId = USED_NETWORK_ID;
-#ifdef DEBUG_CONFIG  
-  char res[5];
-#endif  
-  
-  Config[1]=0xAA;  
-  Config[2]=0x5A;
-  
-  //device ID
-  Config[3]=0xB9; 
-  Config[4]=0x46;
-
-  //Network ID
-  Config[5]=(UsedNetworkId & 0xFF00) >> 8;
-  Config[6]=UsedNetworkId & 0X00FF;
-   
-  Config[7]=0x00;
-  
-  //RF Power
-  Config[8]=0x00; 
-  
-  Config[9]=0x00; 
-
-  // Baudrate
-  Config[10]=0x04; 
- 
-  Config[11]=0x00;
-  //Channel
-  Config[12]=Channel;
-  
-  Config[13]=0x00;
-  Config[14]=0x00;
-  Config[15]=0x00;
-  Config[16]=0x12;
-  Config[17]=0x00;
-  //reset checksum
-  Config[18] =0x0;
-
-  //calculate Checksum
-  for(int i=1;i<17;i++){
-    Config[18] =Config[18] +Config[i];
-  }
-#ifdef DEBUG_CONFIG
-  Serial.print (F(" Config "));
-  for(int i=1;i<19;i++){
-    sprintf(&res[0],"%02X",Config[i]);
-    Serial.print(res);
-    Serial.print(F(" "));    
-  }
-  Serial.println (F(""));
-#endif
-  digitalWrite(DO_SET, LOW);
-  delay(500);
-
-  for(int i=1;i<19;i++){
-
-    mySerial.write(Config[i]);
-  }
- delay(1000);
- digitalWrite(DO_SET, HIGH);
-}
-
-//CRC calculation 
-uint16_t calc_crc(char *msg,int n)
-{
-  // Initial value. xmodem uses 0xFFFF but this example
-  // requires an initial value of zero.
-  uint16_t x = 0;
-
-  while(n--) {
-    x = crc_xmodem_update(x, (uint16_t)*msg++);
-  }
-  return(x);
-}
-
-// See bottom of this page: http://www.nongnu.org/avr-libc/user-manual/group__util__crc.html
-// Polynomial: x^16 + x^12 + x^5 + 1 (0x1021)
-uint16_t crc_xmodem_update (uint16_t crc, uint8_t data)
-{
-  int i;
-
-  crc = crc ^ ((uint16_t)data << 8);
-  for (i=0; i<8; i++) {
-    if (crc & 0x8000)
-      crc = (crc << 1) ^ 0x1021; //(polynomial = 0x1021)
-    else
-      crc <<= 1;
-  }
-  return crc;
-}
 
 //---------------------------------------------------
 //for sending values
