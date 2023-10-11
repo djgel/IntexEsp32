@@ -1,0 +1,113 @@
+### Footprint positions - created on Tue Oct 10 15:43:50 2023 ###
+### Printed by KiCad version 7.0.5
+## Unit = mm, Angle = deg.
+## Side : top
+# Ref                       Val                                                        Package                                                         PosX       PosY       Rot  Side
+                                                                                                                                                   240.7545   -86.0475    0.0000  top
+                                                                                                                                                   239.6741  -100.0138    0.0000  top
+                                                                                                                                                    79.4735  -140.8427    0.0000  top
+                                                                                                                                                    89.7005  -140.9293    0.0000  top
+@HOLE0                                                                                                                                              32.0400  -149.3400    0.0000  top
+@HOLE1                                                                                                                                              31.0266   -35.3995    0.0000  top
+@HOLE2                                                                                                                                             246.3800   -36.0800    0.0000  top
+@HOLE3                                                                                                                                             248.9200  -149.8600    0.0000  top
+BUBBLES_RELAY               Relay_SPDT_Omron_G2RL-1a-E                                 Relay_SPDT_Omron_G2RL-1-E                                   176.6687  -108.4696    0.0000  top
+C1                          CP_Radial_D12.5mm_P2.50mm                                  CP_Radial_D12.5mm_P2.50mm                                   157.4800   -68.5800    0.0000  top
+C2                          CP_Radial_D12.5mm_P2.50mm                                  CP_Radial_D12.5mm_P2.50mm                                   175.2600   -68.5800    0.0000  top
+C3                          CP_Radial_D12.5mm_P2.50mm                                  CP_Radial_D12.5mm_P2.50mm                                   246.3400  -108.9285  180.0000  top
+C4                          CP_Radial_D12.5mm_P2.50mm                                  CP_Radial_D12.5mm_P2.50mm                                   246.3400  -123.3997  180.0000  top
+C5                          0.1µF                                                     0805                                                        185.2502   -55.7253  -90.0000  top
+C6                          0.1µF                                                     0805                                                        209.5012   -55.9518  -90.0000  top
+D1                          SURS8360BT3G                                               D_SMB                                                       245.7637   -83.4435  180.0000  top
+D2                          SURS8360BT3G                                               D_SMB                                                       243.4172   -89.9466   90.0000  top
+D3                          SURS8360BT3G                                               D_SMB                                                       248.2442   -89.9466   90.0000  top
+D4                          SURS8360BT3G                                               D_SMB                                                       245.7590   -96.7178  180.0000  top
+D5                          1N4001                                                     D_SMA                                                       157.2977   -53.7604  -90.0000  top
+D6                          1N4001                                                     D_SMA                                                       163.8007   -51.2798  180.0000  top
+D7                          1N4001                                                     D_SMA                                                       170.5719   -53.7651  -90.0000  top
+D8                          1N4001                                                     D_SMA                                                       163.8007   -56.1068  180.0000  top
+D8                          1N4007                                                     DO41-10                                                     124.9660   -73.5176    0.0000  top
+D9                          1N4007                                                     DO41-10                                                     142.2400   -60.9600    0.0000  top
+D10                         1N4007                                                     DO41-10                                                     141.7499   -80.0735    0.0000  top
+D11                         1N4007                                                     DO41-10                                                     164.1663  -102.5777    0.0000  top
+D12                         1N4007                                                     DO41-10                                                     180.2499  -103.2601    0.0000  top
+D13                         1N4007                                                     DO41-10                                                     196.7599  -103.2601    0.0000  top
+D14                         1N4007                                                     DO41-10                                                     213.2699  -103.2601    0.0000  top
+D15                         1N4007                                                     DO41-10                                                     229.7799  -103.2601    0.0000  top
+DISPLAY0                    4_PINS_CONNECTOR                                           1X04                                                         34.5002  -132.0800   90.0000  top
+FLOW_PROBE_1                JST-XH-3P                                                  JST-XH-03-PACKAGE-LONG-PAD                                  103.5978   -41.9583   90.0000  top
+FLOW_PROBE_2                JST-XH-3P                                                  JST-XH-03-PACKAGE-LONG-PAD                                   90.1700   -41.9100   90.0000  top
+HEATER01_RELAY              Relay_SPDT_Omron_G2RL-1a-E                                 Relay_SPDT_Omron_G2RL-1-E                                   210.0380  -108.4931    0.0000  top
+HEATER02_RELAY              Relay_SPDT_Omron_G2RL-1a-E                                 Relay_SPDT_Omron_G2RL-1-E                                   226.6400  -108.4161    0.0000  top
+JET0                                                                                   LED3MM                                                      192.9499   -98.6881    0.0000  top
+JET_RELAY                   Relay_SPDT_Omron_G2RL-1a-E                                 Relay_SPDT_Omron_G2RL-1-E                                   193.2514  -108.5273    0.0000  top
+LED1                                                                                   LED3MM                                                      121.1560   -68.9456    0.0000  top
+LED_BUBBLES_RELAY                                                                      LED3MM                                                      176.4399   -98.6881    0.0000  top
+LED_HEATER1_RELAY                                                                      LED3MM                                                      209.4599   -98.6881    0.0000  top
+LED_HEATER2_RELAY                                                                      LED3MM                                                      225.9699   -98.5611    0.0000  top
+LED_RELAY_CL1                                                                          LED3MM                                                      138.4300   -56.3880    0.0000  top
+LED_RELAY_CL2                                                                          LED3MM                                                      137.9399   -75.5015    0.0000  top
+POWER12V_RELAY              Relay_SPDT_Omron_G2RL-1a-E                                 Relay_SPDT_Omron_G2RL-1-E                                   160.9016  -108.2433    0.0000  top
+POWER_SUPPLY_110VAC_5VDC0   IRM-10-05                                                  IRM_05_10                                                    84.5121  -111.7596   90.0000  top
+PUMP0                                                                                  LED3MM                                                      160.3563   -98.0057    0.0000  top
+R1                          10K                                                        0207_10                                                      56.1011   -39.1755   90.0000  top
+R3                          10K                                                        0207_10                                                      69.1015   -39.3488   90.0000  top
+R4                          10K                                                        0207_10                                                      82.5500   -39.3700   90.0000  top
+R5                          10K                                                        0207_10                                                      96.5200   -39.3700   90.0000  top
+R6                          10K                                                        0207_10                                                     109.9478   -39.4183   90.0000  top
+R7                          2K7                                                        0204_5                                                      122.4260   -60.8176  180.0000  top
+R8                          10K                                                        0204_5                                                      122.4260   -64.6276  180.0000  top
+R9                          150                                                        0204_5                                                      127.5060   -68.9456    0.0000  top
+R10                         2K7                                                        0204_5                                                      139.2099   -67.3735  180.0000  top
+R11                         10K                                                        0204_5                                                      139.2099   -71.1835  180.0000  top
+R12                         150                                                        0204_5                                                      144.2899   -75.5015    0.0000  top
+R13                         2K7                                                        0204_5                                                      139.7000   -48.2600  180.0000  top
+R14                         10K                                                        0204_5                                                      139.7000   -52.0700  180.0000  top
+R15                         150                                                        0204_5                                                      144.7800   -56.3880    0.0000  top
+R16                         10K                                                        0805                                                        187.7902   -55.7253   90.0000  top
+R17                         10K                                                        0805                                                        190.1302   -55.7253   90.0000  top
+R18                         0.1/1%_(PT2512FK-070R1L)                                   2512                                                        193.9402   -50.5663    0.0000  top
+R19                         10K                                                        0805                                                        199.5282   -54.7173    0.0000  top
+R20                         10K                                                        0805                                                        199.5282   -57.2493    0.0000  top
+R21                         10K                                                        0805                                                        212.0412   -55.9518   90.0000  top
+R22                         10K                                                        0805                                                        214.3812   -55.9518   90.0000  top
+R23                         0.1/1%_(PT2512FK-070R1L)                                   2512                                                        218.1912   -50.7928    0.0000  top
+R24                         2K7                                                        0204_5                                                      161.6263   -89.8777  180.0000  top
+R24                         10K                                                        0805                                                        223.7792   -54.9438    0.0000  top
+R25                         10K                                                        0204_5                                                      161.6263   -93.6877  180.0000  top
+R25                         10K                                                        0805                                                        223.7792   -57.4758    0.0000  top
+R26                         150                                                        0204_5                                                      166.7063   -98.0057    0.0000  top
+R27                         2K7                                                        0204_5                                                      177.7099   -90.5601  180.0000  top
+R28                         10K                                                        0204_5                                                      177.7099   -94.3701  180.0000  top
+R29                         150                                                        0204_5                                                      182.7899   -98.6881    0.0000  top
+R30                         2K7                                                        0204_5                                                      194.2199   -90.5601  180.0000  top
+R31                         10K                                                        0204_5                                                      194.2199   -94.3701  180.0000  top
+R32                         150                                                        0204_5                                                      199.2999   -98.6881    0.0000  top
+R33                         2K7                                                        0204_5                                                      210.7299   -90.5601  180.0000  top
+R34                         10K                                                        0204_5                                                      210.7299   -94.3701  180.0000  top
+R35                         150                                                        0204_5                                                      215.8099   -98.6881    0.0000  top
+R36                         2K7                                                        0204_5                                                      227.2399   -90.5601  180.0000  top
+R37                         10K                                                        0204_5                                                      227.2399   -94.3701  180.0000  top
+R38                         150                                                        0204_5                                                      232.3199   -98.5611    0.0000  top
+Relê_CL01                  Relay_SPDT_SANYOU_SRD_Series_Form_C                        Relay_SPDT_SANYOU_SRD_Series_Form_C                         210.8054   -64.7847  -90.0000  top
+Relê_CL02                  Relay_SPDT_SANYOU_SRD_Series_Form_C                        Relay_SPDT_SANYOU_SRD_Series_Form_C                         227.5766   -64.8427  -90.0000  top
+Relê_ECO                   Relay_SPDT_SANYOU_SRD_Series_Form_C                        Relay_SPDT_SANYOU_SRD_Series_Form_C                         127.0000   -35.5600  -90.0000  top
+S1                          SW_DIP_SPSTx01_Slide_6.7x4.1mm_W7.62mm_P2.54mm_LowProfile  SW_DIP_SPSTx01_Slide_6.7x4.1mm_W7.62mm_P2.54mm_LowProfile   176.5858   -50.9631    0.0000  top
+TEMP_FUSED                  JST-XH-3P                                                  JST-XH-03-PACKAGE-LONG-PAD                                   49.7511   -41.7155   90.0000  top
+TEMP_PROBE_1                JST-XH-3P                                                  JST-XH-03-PACKAGE-LONG-PAD                                   62.7515   -41.8888   90.0000  top
+TEMP_PROBE_2                JST-XH-3P                                                  JST-XH-03-PACKAGE-LONG-PAD                                   76.2000   -41.9100   90.0000  top
+TERMINAL_BARRIER_POWER_12V  4PCV-08-006                                                4PCV-08-006                                                 202.5650   -42.7929    0.0000  top
+TERMINAL_BARRIER_POWER_12V  4PCV-04-006                                                4PCV-04-006                                                 246.3800   -36.0800   90.0000  top
+TERMINAL_BARRIER_POWER110v  4PCV-10-006                                                4PCV-10-006                                                 197.3691  -146.4161    0.0000  top
+T_BUBBLES_RELAY             BC547B                                                     TO92                                                        185.3299   -94.3701   90.0000  top
+T_HEATER2_RELAY             BC547B                                                     TO92                                                        234.8599   -94.3701   90.0000  top
+T_PUMP_RELAY0               BC547B                                                     TO92                                                        169.2463   -93.6877   90.0000  top
+T_PUMP_RELAY1               BC547B                                                     TO92                                                        201.8399   -94.3701   90.0000  top
+T_RELAY_CL1                 BC547B                                                     TO92                                                        147.3200   -52.0700   90.0000  top
+T_RELAY_CL2                 BC547B                                                     TO92                                                        146.8299   -71.1835   90.0000  top
+T_RELAY_ECO                 BC547B                                                     TO92                                                        130.0460   -64.6276   90.0000  top
+T__HEATER1_RELAY            BC547B                                                     TO92                                                        218.3499   -94.3701   90.0000  top
+U$2                         ESP32-DEVKIT-C                                             ESP32-DEVKIT-C                                               54.0937  -125.7765    0.0000  top
+U1                          INA219BIDCNT                                               SOT23-8                                                     193.9402   -55.7253  180.0000  top
+U2                          INA219BIDCNT                                               SOT23-8                                                     218.1912   -55.9518  180.0000  top
+## End

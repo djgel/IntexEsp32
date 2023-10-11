@@ -13,7 +13,7 @@ Codes has partial copy / inspiration of [Yogui79/IntexPureSpa] (https://github.c
 ## Hardware to you need
 
 -   **ESP32 Dev Kit 38Pin**  (Microcontroller) -  [amazon.de](https://amzn.to/3uoa2y4) or [amazon.fr](https://amzn.to/2RvXbLn)]
--   [**Esp32PureSpa**] (Hardware/) Board to make! (in Developed)
+-   "[**Esp32PureSpa**] (Hardware/)" Board to make! (in Developed)
 
 
 ## Software to you need
@@ -75,11 +75,11 @@ const char* Mypassword = "YourPassword";
 | **Increase the Temp.**       | IntexSpa/Cmd increase            | Down=1  | -       | -  
 | **ESP Reset**                | IntexSpa/Cmd Reset ESP            | reset | -       | -             |  
 | **Command Setpoint of Temp.**       | IntexSpa/Cmd Temperature Setpoint| "set a number"  | -       | -
-| **Status Communication with pump**| IntexSpa/Communication with pump | Com/OK=1   | 0=lost connection       | -   |Yes           |
 | **Heater Status**                   | IntexSpa/heater state       | standby=1 & ON=2  | OFF=0    | Yes
 | **Status Setpoint Temp.**         | IntexSpa/Temperature Setpoint    | -       | -       | Yes
-| **Send °F Temp.**     | IntexSpa/Farenheit Celsius       | -       | -       | Yes             |             |
-| **Send Actual Temp.**        | IntexSpa/Actual Temperature      | -       | -       | Yes             |
+| **Send Actual Temp 01.**        | IntexSpa/Actual Temperature01      | -       | -       | Yes             |
+| **Send Actual Temp 02.**        | IntexSpa/Actual Temperature02      | -       | -       | Yes             |out
+| **Send Actual Flow.**        | IntexSpa/Actual Flow      | -       | -       | Yes             |
 | **Send Error Message**       | IntexSpa/Error Number            | -       | -       | Yes             |
 | **Status Power on**          | IntexSpa/Power on                | -       | -       | Yes             |  
 | **Status Bubble on**         | IntexSpa/Bubble on               | -       | -       | Yes             |  
@@ -92,6 +92,7 @@ const char* Mypassword = "YourPassword";
 | **Sanitizer Timer**               | IntexSpa/Cmd Sanitizer time    | hours=3,5,8    | -  | -               |
 | **Status Sanitizer**        | IntexSpa/Sanitizer on            | -       | -       | Yes             |
 | **Status Sanitizer Timer**        | IntexSpa/Sanitizer setup time            | -       | -       | Yes             |
+
 
 ## Debugging
 
